@@ -17,8 +17,38 @@ namespace TecnoFerre.Controllers
         {
             return View();
         }
+        public IActionResult Login()
+        {
+            return View();
+        }
+        public IActionResult Registrarse()
+        {
+            return View();
+        }
+        public IActionResult cambiarContra()
+        {
+            return View();
+        }
+        public IActionResult Ayuda()
+        {
+            return View();
+        }
 
-        public IActionResult Privacy()
+        public IActionResult Categorias()
+        {
+            return View();
+        }
+
+        public IActionResult Rastrear()
+        {
+            return View();
+        }
+        public IActionResult Carrito()
+        {
+            return View();
+        }
+
+        public IActionResult Admin()
         {
             return View();
         }

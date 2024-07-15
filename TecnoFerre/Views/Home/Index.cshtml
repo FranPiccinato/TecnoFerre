@@ -1,8 +1,56 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="inicio" class="carousel slide" data-bs-ride="carousel">
+
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#inicio" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#inicio" data-bs-slide-to="1"></button>
+    </div>
+
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/images/inicioHerramientas.jpg" alt="Herramientas" class="d-block" style="width:100%">
+            <div class="carousel-caption d-none d-md-block fondo-texto">
+                <h3>¡Los Mejores Precios!</h3>
+                <p>Encuentra todo lo que necesitas en herramientas.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/inicioIluminacion.jpg" alt="Luces" class="d-block" style="width:100%">
+            <div class="carousel-caption d-none d-md-block fondo-texto">
+                <h3>¡Gran Variedad de Estilos!</h3>
+                <p>Encuentra todo lo que necesitas de iluminación.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 w-100">
+    <h3 class="fondo-texto texto-rosa ps-4">Nuevos Productos</h3>
+    <div class="row row-cols-1 row-cols-md-3 g-4 my-4">
+        <div class="col mt-5">
+            <div class="card h-100 tarjeta">
+                <img src="~/images/inicioHerramientas.jpg" class="card-img-top" alt="Herramientas">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Herramientas</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 w-100">
+    <h3 class="fondo-texto texto-rosa ps-4">Más buscados</h3>
+    <div class="row row-cols-1 row-cols-md-3 g-4 my-4">
+        <div class="col mt-5">
+            <div class="card h-100 tarjeta">
+                <img src="~/images/inicioHerramientas.jpg" class="card-img-top" alt="Herramientas">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Herramientas</h5>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

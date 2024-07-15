@@ -1,5 +1,6 @@
-html {
-  font-size: 14px;
+html, body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
@@ -19,4 +20,36 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+.navbar-custom {
+    background-color: #FFEBDA;
+}
+
+.navbar-txt {
+    color: #2F3645;
+}
+
+.navbar-txt:hover {
+    color: #FF9568;
+}
+
+.btn {
+    background-color: #EBB098;
+}
+
+.btn:hover {
+    background-color: #F17F4E;
+}
+.fondo-texto {
+    background-color: #2F3645;
+}
+
+.texto-rosa {
+    color: #EBB098;
+    font-weight: 900;
+}
+
+.tarjeta:hover {
+    cursor: pointer;
 }
