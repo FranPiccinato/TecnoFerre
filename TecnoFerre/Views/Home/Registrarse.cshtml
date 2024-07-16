@@ -13,22 +13,29 @@
                         <form method="POST">
                             <h3 class="mb-3 pb-3 text-center fw-bolder" style="letter-spacing: 1px;">Crear un nuevo usuario</h3>
                             <div class="mb-4 text-start">
-                                <input type="text" id="nombre" name="nombre" class="form-control form-control-lg" placeholder="Nombre" />
+                                <input type="text" id="cedula" name="cedula" class="form-control form-control" placeholder="Cédula" />
+                            </div>
+                            <div class="mb-4 text-start">
+                                <input type="text" id="nombre" name="nombre" class="form-control form-control" placeholder="Nombre" />
                             </div>
                             <div class="mb-4">
-                                <input type="email" id="correo" name="correo" class="form-control form-control-lg" placeholder="Correo" />
+                                <input type="email" id="correo" name="correo" class="form-control form-control" placeholder="Correo" />
                             </div>
 
                             <div class="mb-4">
-                                <input type="password" id="contrasena" name="contrasena" class="form-control form-control-lg" placeholder="Contraseña" />
+                                <input type="password" id="contrasena" name="contrasena" class="form-control form-control" placeholder="Contraseña" />
                             </div>
 
                             <div class="mb-4">
-                                <input type="password" id="confirmarContrasena" name="confirmarContrasena" class="form-control form-control-lg" placeholder="Confirmar contraseña" />
+                                <input type="password" id="confirmarContrasena" name="confirmarContrasena" class="form-control form-control" placeholder="Confirmar contraseña" />
+                            </div>
+
+                            <div class="mb-4">
+                                <textarea id="direccion" name="direccion" class="form-control form-control" placeholder="Dirección"></textarea>
                             </div>
 
                             <div class="pt-4 mb-4 text-center">
-                                <button id="btnIniciar" class="btn btn-lg" type="submit">Registrarse</button>
+                                <button id="btnIniciar" class="btn" type="submit">Registrarse</button>
                             </div>
 
                         </form>

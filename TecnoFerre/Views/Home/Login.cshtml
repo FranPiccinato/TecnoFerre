@@ -22,13 +22,16 @@
                                 <input type="password" id="contrasena" name="contrasena" class="form-control form-control-lg" placeholder="Contraseña" />
                             </div>
 
+                            <div class="d-flex align-items-center justify-content-center">
+                                <a asp-area="" asp-controller="Home" asp-action="cambiarContra">¿Olvidó su contraseña?</a>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center mt-4">
 
-                            <a asp-area="" asp-controller="Home" asp-action="cambiarContra">¿Olvidó su contraseña?</a>
+                                <a class="text-center" asp-area="" asp-controller="Home" asp-action="Registrarse">¿Aún no tiene usuario? Registrarse</a>
+                            </div>
                             <div class="pt-4 mb-4 text-center">
                                 <button id="btnIniciar" class="btn btn-lg" type="submit">Iniciar Sesión</button>
                             </div>
-
-                            <a class="align-items-center" asp-area="" asp-controller="Home" asp-action="Registrarse">Aún no tiene usuario</a>
                         </form>
                     </div>
                 </div>
