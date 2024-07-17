@@ -17,18 +17,6 @@ namespace TecnoFerre.Controllers
         {
             return View();
         }
-        public IActionResult Login()
-        {
-            return View();
-        }
-        public IActionResult Registrarse()
-        {
-            return View();
-        }
-        public IActionResult cambiarContra()
-        {
-            return View();
-        }
         public IActionResult Ayuda()
         {
             return View();

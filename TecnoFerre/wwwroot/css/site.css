@@ -57,3 +57,7 @@ body {
 textarea{
     resize: none;
 }
+
+#sidebarMenu {
+    background-color: #FFEBDA;
+}
