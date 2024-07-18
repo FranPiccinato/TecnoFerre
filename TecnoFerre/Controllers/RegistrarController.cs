@@ -32,7 +32,7 @@ namespace TecnoFerre.Controllers
                 if (reader.Read())
                 {
                     con.Close();
-                    return RedirectToAction("Admin", "Home");
+                    return RedirectToAction("Admin", "Producto");
                 }
                 else
                 {

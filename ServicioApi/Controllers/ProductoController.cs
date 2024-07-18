@@ -16,7 +16,7 @@ namespace ServicioApi.Controllers
 
 		void connectionString()
 		{
-			con.ConnectionString = "Data source=P\\SQLEXPRESS; Initial catalog= 'tecnoferreP'; integrated security= true; TrustServerCertificate=Yes;";
+			con.ConnectionString = "Data source=P\\SQLEXPRESS; Initial catalog= 'db_tecnoferre'; integrated security= true; TrustServerCertificate=Yes;";
 		}
 
 		[HttpGet]
