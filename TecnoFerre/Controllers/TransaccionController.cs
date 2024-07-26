@@ -1,16 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TecnoFerre.Models;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TecnoFerre.Controllers
 {
     public class TransaccionController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AppDbContext _context;
 
-        public TransaccionController(ApplicationDbContext context)
+        public TransaccionController(AppDbContext context)
         {
             _context = context;
         }

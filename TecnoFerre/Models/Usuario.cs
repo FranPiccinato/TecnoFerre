@@ -1,8 +1,6 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace TecnoFerre.Models
+﻿namespace TecnoFerre.Models
 {
-    public class Cliente
+    public class Usuario
     {
         public int cedula {  get; set; }
         public string nombre { get; set; }
@@ -10,5 +8,6 @@ namespace TecnoFerre.Models
         public string contrasena { get; set; }
         public string confirmarContrasena { get; set; }
         public string direccion {  get; set; }
+        public int rol {  get; set; }
     }
 }

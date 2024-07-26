@@ -1,191 +1,122 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServicioApi.Models;
-using System.Data;
-using System.Data.SqlClient;
-using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System;
+
 
 namespace ServicioApi.Controllers
 {
-	[Route("api/[controller]")]
-	[ApiController]
-	public class ProductoController : Controller
-	{
-		SqlConnection con = new SqlConnection();
-		SqlCommand cmd = new SqlCommand();
-		SqlDataReader reader;
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ProductoController : ControllerBase
+    {
+        private readonly AppDbContext _context;
 
-		void connectionString()
-		{
-			con.ConnectionString = "Data source=P\\SQLEXPRESS; Initial catalog= 'db_tecnoferre'; integrated security= true; TrustServerCertificate=Yes;";
-		}
+        public ProductoController(AppDbContext context)
+        {
+            _context = context;
+        }
 
-		[HttpGet]
-		[Route("Listar")]
-		public IActionResult ListarProductos()
-		{
+        [HttpGet]
+        [Route("Listar")]
+        public async Task<IActionResult> ListarProductos()
+        {
+            try
+            {
+                var listaProductos = await _context.Productos.ToListAsync();
+                return Ok(new { mensaje = "ok", response = listaProductos });
+            }
+            catch (Exception error)
+            {
+                return StatusCode(500, new { mensaje = error.Message });
+            }
+        }
 
-			List<Producto> listaProductos = new List<Producto>();
+        [HttpPost]
+        [Route("Guardar")]
+        public async Task<IActionResult> Guardar([FromBody] Producto producto)
+        {
+            try
+            {
+                _context.Productos.Add(producto);
+                await _context.SaveChangesAsync();
+                return Ok(new { mensaje = "agregado" });
+            }
+            catch (Exception error)
+            {
+                return StatusCode(500, new { mensaje = error.Message });
+            }
+        }
 
-			try
-			{
+        [HttpGet]
+        [Route("Obtener/{id:int}")]
+        public async Task<IActionResult> ObtenerProducto(int id)
+        {
+            try
+            {
+                var producto = await _context.Productos.FindAsync(id);
+                if (producto == null)
+                {
+                    return NotFound(new { mensaje = "Producto no encontrado" });
+                }
+                return Ok(new { mensaje = "ok", response = producto });
+            }
+            catch (Exception error)
+            {
+                return StatusCode(500, new { mensaje = error.Message });
+            }
+        }
 
-					connectionString();
-					con.Open();
-					cmd.Connection = con;
-					cmd.CommandText = "select * from producto";
-					using (var rd = cmd.ExecuteReader())
-					{
+        [HttpPut]
+        [Route("Editar")]
+        public async Task<IActionResult> Editar([FromBody] Producto producto)
+        {
+            try
+            {
+                var productoExistente = await _context.Productos.FindAsync(producto.id);
+                if (productoExistente == null)
+                {
+                    return NotFound(new { mensaje = "Producto no encontrado" });
+                }
 
-						while (rd.Read())
-						{
+                productoExistente.nombre = producto.nombre;
+                productoExistente.categoria = producto.categoria;
+                productoExistente.precio = producto.precio;
 
-							listaProductos.Add(new Producto
-							{
-								id = Convert.ToInt32(rd["id"]),
-								nombre = (rd["nombre"].ToString()),
-								categoria = rd["categoria"].ToString(),
-								precio = Convert.ToDecimal(rd["precio"])
-							});
-						}
-						con.Close();
-				}
+                _context.Productos.Update(productoExistente);
+                await _context.SaveChangesAsync();
 
-				return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok", response = listaProductos });
-			}
-			catch (Exception error)
-			{
+                return Ok(new { mensaje = "editado" });
+            }
+            catch (Exception error)
+            {
+                return StatusCode(500, new { mensaje = error.Message });
+            }
+        }
 
-				return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = error.Message, response = listaProductos });
+        [HttpDelete]
+        [Route("Eliminar/{id:int}")]
+        public async Task<IActionResult> Eliminar(int id)
+        {
+            try
+            {
+                var producto = await _context.Productos.FindAsync(id);
+                if (producto == null)
+                {
+                    return NotFound(new { mensaje = "Producto no encontrado" });
+                }
 
-			}
-		}
-		
-		[HttpPost]
-		[Route("Guardar")]
-		public IActionResult Guardar([FromBody] Producto producto)
-		{
-			try
-			{
+                _context.Productos.Remove(producto);
+                await _context.SaveChangesAsync();
 
-				connectionString();
-				con.Open();
-				cmd.Connection = con;
-				cmd.CommandText = "insert into producto(nombre, categoria, precio) values (@nombre, @categoria, @precio)";
-				cmd.Parameters.AddWithValue("nombre", producto.nombre);
-				cmd.Parameters.AddWithValue("categoria", producto.categoria);
-				cmd.Parameters.AddWithValue("precio", producto.precio);
-
-				cmd.ExecuteNonQuery();
-
-				return StatusCode(StatusCodes.Status200OK, new { mensaje = "agregado" });
-			}
-			catch (Exception error)
-			{
-
-				return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = error.Message });
-
-			}
-		}
-		
-		[HttpGet]
-		[Route("Obtener/{id:int}")]
-		public IActionResult ObtenerProductos(int id)
-		{
-
-			List<Producto> listaProducto = new List<Producto>();
-			Producto producto = new Producto();
-
-			try
-			{
-
-				connectionString();
-				con.Open();
-				cmd.Connection = con;
-				cmd.CommandText = "select * from producto";
-				using (var rd = cmd.ExecuteReader())
-					{
-
-						while (rd.Read())
-						{
-
-							listaProducto.Add(new Producto
-							{
-								id = Convert.ToInt32(rd["id"]),
-								nombre = (rd["nombre"].ToString()),
-								categoria = rd["categoria"].ToString(),
-								precio = Convert.ToDecimal(rd["precio"])
-							});
-						}
-
-					}
-
-				producto = listaProducto.Where(item => item.id == id).FirstOrDefault();
-
-				return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok", response = producto });
-			}
-			catch (Exception error)
-			{
-
-				return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = error.Message, response = producto });
-
-			}
-		}
-
-		[HttpPut]
-		[Route("Editar")]
-		public IActionResult Editar([FromBody] Producto producto)
-		{
-			try
-			{
-
-				connectionString();
-				con.Open();
-				cmd.Connection = con;
-				cmd.CommandText = "update producto set nombre = @nombre, categoria = @categoria, precio = @precio";
-
-				cmd.Parameters.AddWithValue("@nombre", producto.nombre is null ? DBNull.Value : producto.nombre);
-				cmd.Parameters.AddWithValue("@categoria", producto.categoria is null ? DBNull.Value : producto.categoria);
-				cmd.Parameters.AddWithValue("@precio", producto.precio == 0 ? DBNull.Value : producto.precio);
-
-				cmd.ExecuteNonQuery();
-				
-
-				return StatusCode(StatusCodes.Status200OK, new { mensaje = "editado" });
-			}
-			catch (Exception error)
-			{
-
-				return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = error.Message });
-
-			}
-		}
-
-		[HttpDelete]
-		[Route("Eliminar/{id:int}")]
-		public IActionResult Eliminar(int id)
-		{
-			try
-			{
-
-				connectionString();
-				con.Open();
-				cmd.Connection = con;
-				cmd.CommandText = "delete from producto where id = @id";
-				cmd.Parameters.AddWithValue("@id", id);
-
-				cmd.ExecuteNonQuery();
-
-				return StatusCode(StatusCodes.Status200OK, new { mensaje = "eliminado" });
-			}
-			catch (Exception error)
-			{
-
-				return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = error.Message });
-
-			}
-		}
+                return Ok(new { mensaje = "eliminado" });
+            }
+            catch (Exception error)
+            {
+                return StatusCode(500, new { mensaje = error.Message });
+            }
+        }
 
 
-	}
-
+    }
 }
