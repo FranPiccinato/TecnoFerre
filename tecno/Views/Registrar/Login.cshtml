@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <div class="col-xl-11">
+        <div class="card" style="border-radius: 30px;">
+            <div class="row g-0">
+
+                <div class="col-lg-5 d-none d-md-block">
+                    <img src="~/images/imagenLogin.jpeg" class="img-fluid" style="border-radius: 25px 0 0 25px;"  alt="">
+                </div>
+                <div class="col-lg-7 d-flex align-items-center justify-content-center">
+                    <div class="card-body px-5  my-3">
+                        @if (ViewData["MensajeError"] != null)
+                        {
+                            <div class="alert alert-danger mb-4" role="alert">
+                                @ViewData["MensajeError"]
+                            </div>
+                        }
+                        @if (TempData["MensajeExito"] != null)
+                        {
+                            <div class="alert alert-success mb-4" role="alert">
+                                @TempData["MensajeExito"]
+                            </div>
+                        }
+                        <form method="POST">
+                            <h3 class="mb-3 pb-3 text-center fw-bolder" style="letter-spacing: 1px;">Iniciar Sesión</h3>
+
+                            <div class="mb-4">
+                                <input type="email" id="correo" name="correo" class="form-control form-control-lg" placeholder="Correo"/>
+                            </div>
+
+                            <div class="mb-4">
+                                <input type="password" id="contrasena" name="contrasena" class="form-control form-control-lg" placeholder="Contraseña" />
+                            </div>
+
+                            <div class="d-flex align-items-center justify-content-center mt-4">
+
+                                <a class="text-center" asp-area="" asp-controller="Registrar" asp-action="Registrarse">¿Aún no tiene usuario? Registrarse</a>
+                            </div>
+                            <div class="pt-4 mb-4 text-center">
+                                <button id="btnIniciar" class="btn btn-lg" type="submit">Iniciar Sesión</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

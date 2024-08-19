@@ -1,0 +1,45 @@
+﻿@model IEnumerable<tecno.Models.Factura>
+
+<h2>Mis Pedidos</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID Pedido</th>
+                <th>Número de Factura</th>
+                <th>Fecha de Emisión</th>
+                <th>Total</th>
+                <th>Mensajero</th>
+                <th>Estado</th>
+                <th>Productos</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var factura in Model)
+            {
+                <tr>
+                    <td>@factura.id</td>
+                    <td>@factura.nFactura</td>
+                    <td>@factura.fechaEmision.ToString("dd/MM/yyyy")</td>
+                    <td>₡@factura.total</td>
+                    <td>@factura.Mensajero?.nombre ?? "No asignado"</td>
+                    <td>@factura.Estado</td> 
+                    <td>
+                        <ul>
+                            @foreach (var item in factura.FacturaItems)
+                            {
+                                <li>@item.Producto.nombre - Cantidad: @item.Quantity</li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No tienes pedidos.</p>
+}

@@ -1,0 +1,69 @@
+﻿@model List<Producto>
+@{
+    ViewData["Title"] = "Admin";
+}
+ @if (ViewData["MensajeError"] != null)
+    {
+        <div class="alert alert-danger mb-4" role="alert">
+            @ViewData["MensajeError"]
+        </div>
+    }
+    @if (TempData["MensajeExito"] != null)
+    {
+        <div class="alert alert-success mb-4" role="alert">
+            @TempData["MensajeExito"]
+        </div>
+    }
+
+<h1 class="page-title">Gestión Admin</h1>
+
+<div class="row mb-4">
+        <div class="card-header">
+            Agregar Mensajeros
+        </div>
+        <div class="card-body">
+
+            <a asp-action="Mensajero" asp-controller="Registrar" class="btn btn-sm">Nuevo mensajero</a>
+        </div>
+</div
+
+<div class="row">
+    <div class="card">
+        <div class="card-header">
+            Lista de productos
+        </div>
+        <div class="card-body">
+
+            <a asp-action="Producto" asp-controller="Producto" asp-route-id="0" class="btn btn-sm">Nuevo producto</a>
+            <hr />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Categoria</th>
+                        <th>Precio</th>
+                        <th>Descripción</th>
+                        <th>Imagen</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.nombre</td>
+                            <td>@item.categoria</td>
+                            <td>@item.precio</td>
+                            <td>@item.descripcion</td>
+                            <td>@item.imagen</td>
+                            <td>
+                                <a asp-action="Producto" asp-controller="Producto" asp-route-id="@item.id" class="btn btn-sm mb-4">Editar</a>
+                                <a asp-action="Eliminar" asp-controller="Producto" asp-route-id="@item.id" class="btn btn-sm">Eliminar</a>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+</div>

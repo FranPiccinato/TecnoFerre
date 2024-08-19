@@ -1,0 +1,83 @@
+﻿@model IEnumerable<tecno.Models.Factura>
+
+@{
+    ViewData["Title"] = "Gestionar Pedidos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Pedido</th>
+            <th>Número de Factura</th>
+            <th>Fecha de Emisión</th>
+            <th>Total</th>
+            <th>Mensajero</th>
+            <th>Estado</th>
+            <th>Productos</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pedido in Model)
+        {
+            <tr>
+                <td>@pedido.id</td>
+                <td>@pedido.nFactura</td>
+                <td>@pedido.fechaEmision.ToString("dd/MM/yyyy")</td>
+                <td>₡@pedido.total</td>
+                <td>@pedido.Mensajero?.nombre ?? "No asignado"</td>
+                <td>@pedido.Estado</td>
+                <td>
+                    <ul>
+                        @foreach (var item in pedido.FacturaItems)
+                        {
+                            <li>@item.Producto.nombre - Cantidad: @item.Quantity</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <form asp-action="AsignarMensajero" method="post">
+                        <select name="id_mensajero" class="form-control">
+                            <option value="">Seleccionar Mensajero</option>
+                            @foreach (var mensajero in ViewBag.Mensajeros)
+                            {
+                                @if (mensajero.cedula == pedido.id_mensajero)
+                                {
+                                    <option value="@mensajero.cedula" selected>@mensajero.nombre</option>
+                                }
+                                else
+                                {
+                                    <option value="@mensajero.cedula">@mensajero.nombre</option>
+                                }
+                            }
+                        </select>
+                        <input type="hidden" name="id_factura" value="@pedido.id" />
+                        <button type="submit" class="btn btn-primary mt-2">Asignar</button>
+                    </form>
+                    <form asp-action="CambiarEstado" method="post" class="mt-2">
+                        <select name="Estado" class="form-control">
+                            @{
+                                var estados = new List<string> { "Pendiente", "En Proceso", "Entregado", "Cancelado" };
+                            }
+                            @foreach (var estado in estados)
+                            {
+                                @if (pedido.Estado == estado)
+                                {
+                                    <option value="@estado" selected>@estado</option>
+                                }
+                                else
+                                {
+                                    <option value="@estado">@estado</option>
+                                }
+                            }
+                        </select>
+                        <input type="hidden" name="id_factura" value="@pedido.id" />
+                        <button type="submit" class="btn btn-success mt-2">Actualizar Estado</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

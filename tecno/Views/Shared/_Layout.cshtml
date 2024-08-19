@@ -1,0 +1,148 @@
+﻿@{
+    string rol = User.Identity.GetRol();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TecnoFerre</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TecnoFerre.styles.css" asp-append-version="true" />
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' />
+    <link rel="icon" type="image/png" href="~/images/logo.jpeg" sizes="32x32" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-custom navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="me-2" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.jpeg" width="50" height="65" />
+                </a>
+                <a class="navbar-brand navbar-txt fw-bolder" asp-area="" asp-controller="Home" asp-action="Index">TecnoFerre S.A</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav mx-4">
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <a class="nav-link navbar-txt dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Categorías</a>
+                                @if (ViewBag.Categorias != null)
+                                {
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Categorias">Todas las categorías</a></li>
+                                        @foreach (var item in ViewBag.Categorias)
+                                        {
+                                            <li><a class="dropdown-item" href="/Home/Categorias#@item">@item</a></li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li class="dropdown-item">No hay categorías disponibles</li>
+                                    </ul>
+                                }
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="navbar-nav flex-grow-1 mx-5 px-5">
+                        <div class="container">
+                            <div class="dropdown">
+                                <input type="text" class="jAuto form-control dropdown-toggle"
+                                       placeholder="Buscar producto..." autocomplete="off">
+                                <div class="dropdown-menu">
+                                    <i class="sinResultados">No se encontró el producto</i>
+                                    <div class="lista-autocomplete">
+                                        @if (ViewBag.Buscar != null)
+                                        {
+                                            @foreach (var item in ViewBag.Buscar)
+                                            {
+                                                <a asp-action="informacionProducto" asp-controller="Home" asp-route-id="@item.id" class="text-decoration-none">
+                                                    <button type="button" class="dropdown-item">@item.nombre</button>
+                                                </a>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="text-decoration-none btnBuscar">
+                            <button type="button" class="btn">Buscar</button>
+                        </a>
+                    </div>
+                    <ul class="navbar-nav mx-4">
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <a class="nav-link navbar-txt" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" asp-controller="Registrar" asp-action="Login">
+                                    <i class="bi bi-person-circle" style="font-size: 35px;"></i>
+                                </a>
+
+                                <ul class="dropdown-menu  dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                                    @if (string.IsNullOrEmpty(rol))
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="Registrar" asp-action="Login" asp-route-id="IniciarSesion">
+                                                <button class="btn" type="submit">Iniciar Sesión</button>
+                                            </a>
+                                        </li>
+                                    }
+                                    else if (rol == "Cliente")
+                                    {
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Usuario">Mi cuenta</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Usuario" asp-action="MisPedidos">Mis Pedidos</a></li>
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="Registrar" asp-action="cerrarSesion">
+                                                <button class="btn" type="submit">Cerrar Sesión</button>
+                                            </a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Producto" asp-action="Admin">Productos & Mensajeros</a></li>
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="Registrar" asp-action="cerrarSesion">
+                                                <button class="btn" type="submit">Cerrar Sesión</button>
+                                            </a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link navbar-txt" asp-area="" asp-controller="Carrito" asp-action="Carrito">
+                                <i class="bi bi-basket2-fill" style="font-size: 35px;"></i>
+
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - TecnoFerre - <a asp-area="" asp-controller="Home" asp-action="Ayuda">Ayuda</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

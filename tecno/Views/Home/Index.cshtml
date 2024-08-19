@@ -1,0 +1,131 @@
+﻿@model List<Producto>
+@{
+    ViewData["Title"] = "Inicio";
+    List<Producto> nuevos = new List<Producto>();
+    nuevos = nuevos.Concat(Model).ToList();
+    nuevos.Sort((x, y) => x.fecha_ingreso.CompareTo(y.fecha_ingreso));
+}
+
+<div id="inicio" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#inicio" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#inicio" data-bs-slide-to="1"></button>
+    </div>
+
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/images/inicioHerramientas.jpg" alt="Herramientas" class="d-block" style="width:100%">
+            <div class="carousel-caption d-none d-md-block fondo-texto">
+                <h3>¡Los Mejores Precios!</h3>
+                <p>Encuentra todo lo que necesitas en herramientas.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/inicioIluminacion.jpg" alt="Luces" class="d-block" style="width:100%">
+            <div class="carousel-caption d-none d-md-block fondo-texto">
+                <h3>¡Gran Variedad de Estilos!</h3>
+                <p>Encuentra todo lo que necesitas de iluminación.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 w-100">
+    <div class="row">
+        <div class="col">
+            <h3 class="fondo-texto texto-rosa ps-4">Nuevos Productos</h3>
+        </div>
+        <div class="col-md-auto text-right">
+            <a class="btn mb-3 mr-1" href="#carousel" role="button" data-bs-slide="prev">
+                <i class="fbi bi-arrow-left"></i>
+            </a>
+            <a class="btn mb-3" href="#carousel" role="button" data-bs-slide="next">
+                <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <section class="pt-5 pb-5">
+        <div class="container">
+            <div class="col-12">
+                <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @for (int i = 0; i < nuevos.Count && i < 8; i += 4)
+                        {
+                            <div class="carousel-item @(i == 0 ? "active" : "")">
+                                <div class="row">
+                                    @for (int j = i; j < i + 4 && j < nuevos.Count; j++)
+                                    {
+                                        <div class="col-md-3 mb-3">
+                                            <a asp-action="informacionProducto" asp-controller="Home" asp-route-id="@nuevos[j].id" class="text-decoration-none">
+                                                <div class="card">
+                                                    <img class="img-fluid producto-imagen" alt="@nuevos[j].nombre" src="@nuevos[j].imagen">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title">@nuevos[j].nombre</h4>
+                                                        <span>₡@nuevos[j].precio</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="container mt-5 w-100">
+    <div class="row">
+        <div class="col">
+            <h3 class="fondo-texto texto-rosa ps-4">Herramientas</h3>
+        </div>
+        <div class="col-md-auto text-right">
+            <a class="btn mb-3 mr-1" href="#carouselHerramientas" role="button" data-bs-slide="prev">
+                <i class="fbi bi-arrow-left"></i>
+            </a>
+            <a class="btn mb-3" href="#carouselHerramientas" role="button" data-bs-slide="next">
+                <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <section class="pt-5 pb-5">
+        <div class="container">
+            <div class="col-12">
+                <div id="carouselHerramientas" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @{
+                            var herramientas = nuevos.Where(p => p.categoria == "Herramientas").Take(8).ToList();
+
+                            for (int i = 0; i < herramientas.Count; i += 4)
+                            {
+                                <div class="carousel-item @(i == 0 ? "active" : "")">
+                                    <div class="row">
+                                        @for (int j = i; j < i + 4 && j < herramientas.Count; j++)
+                                        {
+                                            <div class="col-md-3 mb-3">
+                                                <a asp-action="informacionProducto" asp-controller="Home" asp-route-id="@herramientas[j].id" class="text-decoration-none">
+                                                    <div class="card">
+                                                        <img class="img-fluid producto-imagen" alt="@herramientas[j].nombre" src="@herramientas[j].imagen">
+                                                        <div class="card-body">
+                                                            <h4 class="card-title">@herramientas[j].nombre</h4>
+                                                            <span>₡@herramientas[j].precio</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

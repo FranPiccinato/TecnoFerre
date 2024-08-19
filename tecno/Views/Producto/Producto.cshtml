@@ -1,0 +1,66 @@
+﻿@model Producto
+@{
+    ViewData["Title"] = "Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-header">
+        @ViewBag.Accion
+    </div>
+    <div class="card-body">
+
+        <form asp-action="GuardarCambios" asp-controller="Producto" method="post">
+
+            <input type="hidden" asp-for="id" />
+
+            <div class="mb-2">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-control form-control-sm" asp-for="nombre" required/>
+            </div>
+            <div class="mb-2">
+                @if(ViewBag.Accion == "Nuevo Producto")
+                {
+                    <div class="dropdown">
+                        <label class="form-label">Elige una categoría o crea una nueva</label>
+                        <input type="text" class="categoriaAuto form-control form-control-sm dropdown-toggle" autocomplete="off" asp-for="categoria">
+                        <div class="dropdown-menu">
+                            <div class="lista-autocomplete">
+                                @foreach (var categoria in ViewBag.Categorias)
+                                {
+                                    <span class="dropdown-item">@categoria</span>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                                       <label class="form-label">Editar categoría</label>
+                    <input type="text" class="form-control form-control-sm" autocomplete="off" asp-for="categoria">
+                }
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Precio</label>
+                <input type="text" class="form-control form-control-sm" asp-for="precio" placeholder="0" required/>
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Descripción</label>
+                <textarea type="text" class="form-control form-control-sm" asp-for="descripcion" required></textarea>
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Imagen</label>
+                <input type="text" class="form-control form-control-sm" asp-for="imagen" required />
+            </div>
+            <button type="submit" class="btn btn-sm">Guardar Cambios</button>
+            <a asp-action="Admin" asp-controller="Producto" class="btn btn-sm">Ver lista</a>
+        </form>
+
+
+
+
+    </div>
+
+</div>

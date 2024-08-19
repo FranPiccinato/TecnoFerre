@@ -1,0 +1,8 @@
+﻿@model string
+@{
+    ViewData["Title"] = "Cuenta";
+    string nombre = User.Identity.GetNombre();
+}
+
+<h1>@nombre</h1>
+
