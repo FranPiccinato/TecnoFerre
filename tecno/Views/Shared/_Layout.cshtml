@@ -17,7 +17,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-custom navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-custom navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 d-print-none">
             <div class="container-fluid">
                 <a class="me-2" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/images/logo.jpeg" width="50" height="65" />
@@ -95,7 +95,6 @@
                                     }
                                     else if (rol == "Cliente")
                                     {
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Usuario">Mi cuenta</a></li>
                                         <li><a class="dropdown-item" asp-area="" asp-controller="Usuario" asp-action="MisPedidos">Mis Pedidos</a></li>
                                         <li>
                                             <a class="dropdown-item" asp-area="" asp-controller="Registrar" asp-action="cerrarSesion">
@@ -105,7 +104,9 @@
                                     }
                                     else
                                     {
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Producto" asp-action="Admin">Productos & Mensajeros</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Producto" asp-action="Admin">Productos</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Registrar" asp-action="Mensajero">Mensajeros</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="GestionarPedidos">Gestionar Pedidos</a></li>
                                         <li>
                                             <a class="dropdown-item" asp-area="" asp-controller="Registrar" asp-action="cerrarSesion">
                                                 <button class="btn" type="submit">Cerrar Sesión</button>
@@ -133,7 +134,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted d-print-none py-4">
         <div class="container">
             &copy; 2024 - TecnoFerre - <a asp-area="" asp-controller="Home" asp-action="Ayuda">Ayuda</a>
         </div>

@@ -47,16 +47,16 @@ namespace tecno.Models
                 .HasForeignKey(ci => ci.ProductId);
 
             modelBuilder.Entity<Cart>()
-       .HasOne(c => c.Usuario)
-       .WithMany()
-       .HasForeignKey(c => c.UserId)
-       .HasConstraintName("FK_Cart_Usuario")
-       .OnDelete(DeleteBehavior.Cascade);
+               .HasOne(c => c.Usuario)
+               .WithMany()
+               .HasForeignKey(c => c.UserId)
+               .HasConstraintName("FK_Cart_Usuario")
+               .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Factura>()
-            .HasMany(f => f.FacturaItems)
-            .WithOne(fi => fi.Factura)
-            .HasForeignKey(fi => fi.FacturaId);
+                .HasMany(f => f.FacturaItems)
+                .WithOne(fi => fi.Factura)
+                .HasForeignKey(fi => fi.FacturaId);
 
             modelBuilder.Entity<Factura>()
                 .HasOne(f => f.carrito)

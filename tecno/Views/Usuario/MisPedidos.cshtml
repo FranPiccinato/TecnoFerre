@@ -24,7 +24,7 @@
                     <td>@factura.nFactura</td>
                     <td>@factura.fechaEmision.ToString("dd/MM/yyyy")</td>
                     <td>₡@factura.total</td>
-                    <td>@factura.Mensajero?.nombre ?? "No asignado"</td>
+                    <td>@(factura.Mensajero != null ? factura.Mensajero.nombre : "No asignado")</td>
                     <td>@factura.Estado</td> 
                     <td>
                         <ul>

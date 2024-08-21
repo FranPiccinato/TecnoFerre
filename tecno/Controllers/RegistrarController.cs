@@ -25,7 +25,7 @@ namespace tecno.Controllers
 
         void connectionString()
         {
-            con.ConnectionString = "Data source=DESKTOP-7OHKGLF\\SQLEXPRESS; Initial catalog= 'db_tecnoferre'; integrated security= true; TrustServerCertificate=Yes;";
+            con.ConnectionString = "Data source=P\\SQLEXPRESS; Initial catalog= 'db_tecnoferre'; integrated security= true; TrustServerCertificate=Yes;";
         }
         public async Task<IActionResult> Login()
         {

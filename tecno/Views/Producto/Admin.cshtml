@@ -1,6 +1,6 @@
 ﻿@model List<Producto>
 @{
-    ViewData["Title"] = "Admin";
+    ViewData["Title"] = "Admin - Productos";
 }
  @if (ViewData["MensajeError"] != null)
     {
@@ -14,18 +14,6 @@
             @TempData["MensajeExito"]
         </div>
     }
-
-<h1 class="page-title">Gestión Admin</h1>
-
-<div class="row mb-4">
-        <div class="card-header">
-            Agregar Mensajeros
-        </div>
-        <div class="card-body">
-
-            <a asp-action="Mensajero" asp-controller="Registrar" class="btn btn-sm">Nuevo mensajero</a>
-        </div>
-</div
 
 <div class="row">
     <div class="card">
