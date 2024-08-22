@@ -30,7 +30,7 @@ fecha_ingreso date  not null
 CREATE TABLE Cart (
     CartId INT PRIMARY KEY IDENTITY(1,1),
     UserId INT FOREIGN KEY REFERENCES Usuario(cedula), 
-    CreatedDate DATE NOT NULL DEFAULT燝ETDATE()
+    CreatedDate DATE NOT NULL DEFAULT聽GETDATE()
 );
 
 CREATE TABLE CartItems (
@@ -38,7 +38,7 @@ CREATE TABLE CartItems (
     CartId INT FOREIGN KEY REFERENCES Cart(CartId) ON DELETE CASCADE, 
     ProductId INT FOREIGN KEY REFERENCES Producto(id), 
     Quantity INT NOT NULL,
-    Price DECIMAL(8,2)燦OT燦ULL
+    Price DECIMAL(8,2)聽NOT聽NULL
 );
 
 CREATE TABLE Orders (
@@ -46,7 +46,7 @@ CREATE TABLE Orders (
     UserId INT FOREIGN KEY REFERENCES Usuario(cedula),
     OrderDate DATE NOT NULL DEFAULT GETDATE(),
     TotalAmount DECIMAL(10, 2) NOT NULL,
-    PaymentStatus VARCHAR(50)燦OT燦ULL
+    PaymentStatus VARCHAR(50)聽NOT聽NULL
 );
 
 create table factura(
@@ -67,7 +67,7 @@ id int primary key identity (1,1),
 FacturaId  INT FOREIGN KEY REFERENCES Factura(id),
 ProductoId INT FOREIGN KEY REFERENCES Producto(id), 
 Quantity INT NOT NULL,
-Price DECIMAL(8,2)燦OT燦ULL
+Price DECIMAL(8,2)聽NOT聽NULL
 );
 
 
@@ -76,15 +76,15 @@ insert into rol(id, tipo) values(2, 'Cliente');
 insert into rol(id, tipo) values(3, 'Mensajero');
 
 
-insert into usuario (cedula, nombre, correo, contrasena, rol) values (1, 'admin','admin@gmail.com', 'tecnoAdmin12', 1)
+insert into usuario (cedula, nombre, correo, contrasena, direccion, rol) values (1, 'admin','admin@gmail.com', 'tecnoAdmin12', ' ' , 1)
 insert into usuario (cedula, nombre, correo, contrasena, direccion, rol) values (111089234, 'Daniel Mora','daniel.mora@gmail.com', 'Mensajero12', ' ' , 3)
 
-insert into producto(nombre, categoria, precio, descripcion, imagen, fecha_ingreso) values ('Termoducha', 'Ba駉', 20000, 'Combina funcionalidad y dise駉 moderno para elevar tu experiencia en el ba駉. Equipado con tecnolog韆 avanzada para un control preciso de la temperatura del agua, garantiza una ducha c髆oda y agradable cada vez. Su construcci髇 robusta y materiales de alta calidad aseguran durabilidad y resistencia al desgaste. F醕il de instalar y compatible con la mayor韆 de los sistemas de agua.', 'https://i.imghippo.com/files/bh6Jk1722812930.jpg', '2024-07-01')
-insert into producto(nombre, categoria, precio, descripcion, imagen, fecha_ingreso) values ('Rodillo', 'Pintura y Accesorios', 7000, 'Una herramienta esencial para lograr acabados de pintura uniformes y profesionales en superficies amplias. Su dise駉 eficiente facilita la aplicaci髇 de pintura, ahorrando tiempo y esfuerzo en proyectos grandes. Fabricado con materiales duraderos, ofrece resistencia y una larga vida 鷗il, mientras que su mango ergon髆ico asegura un agarre c髆odo, incluso durante sesiones prolongadas.', 'https://i.imghippo.com/files/u5rHn1722814543.jpg', '2024-07-01');
-insert into producto(nombre, categoria, precio, descripcion, imagen, fecha_ingreso) values ('Cinta M閠rica', 'Medici髇', 2000, 'Una herramienta imprescindible para todo tipo de trabajos de medici髇. Con una longitud adecuada para una variedad de proyectos, su dise駉 compacto y robusto permite un uso pr醕tico y preciso. Fabricada con materiales resistentes, asegura durabilidad y una medici髇 exacta, siendo ideal tanto para tareas dom閟ticas como profesionales.', 'https://i.imghippo.com/files/IKkyg1722814341.jpg', '2024-07-01');
-insert into producto(nombre, categoria, precio, descripcion, imagen, fecha_ingreso) values ('Llave Inglesa', 'Herramientas', 20000, 'Una herramienta esencial en cualquier caja de herramientas. Su dise駉 ajustable permite adaptarse a diferentes tama駉s de tuercas y tornillos, ofreciendo versatilidad en una variedad de aplicaciones. Fabricada con acero de alta calidad, proporciona resistencia y durabilidad, soportando el uso intensivo sin deformarse. Su mango ergon髆ico asegura un agarre c髆odo y firme, facilitando el trabajo en espacios reducidos.', 'https://i.imghippo.com/files/NMhnP1722814401.jpg', '2024-07-01');
-insert into producto(nombre, categoria, precio, descripcion, imagen, fecha_ingreso) values ('Martillo', 'Herramientas', 15000, 'Una herramienta fundamental para cualquier proyecto de construcci髇 o reparaci髇. Su dise駉 robusto y equilibrado permite una fuerza de impacto eficaz, ideal para clavar clavos y realizar tareas de demolici髇. Fabricado con materiales de alta calidad, garantiza durabilidad y resistencia al desgaste. El mango ergon髆ico proporciona un agarre c髆odo, reduciendo la fatiga durante el uso prolongado', 'https://i.imghippo.com/files/V8nPX1722814450.jpg', '2024-07-01');
-insert into producto(nombre, categoria, precio, descripcion, imagen, fecha_ingreso) values ('Destornillador', 'Herramientas', 8000, 'Una herramienta vers醫il y esencial para cualquier caja de herramientas. Su dise駉 ergon髆ico y mango antideslizante garantizan un agarre c髆odo y firme, facilitando el manejo y reduciendo la fatiga. Fabricado con acero de alta calidad, ofrece durabilidad y precisi髇 en el ajuste de tornillos.', 'https://i.imghippo.com/files/5GwGS1722814483.jpg', '2024-07-01');
-insert into producto(nombre, categoria, precio, descripcion, imagen, fecha_ingreso) values ('Taladro', 'Herramientas El閏tricas', 120000, 'Una herramienta el閏trica fundamental para perforar y realizar tareas de instalaci髇. Con un potente motor y m鷏tiples velocidades, ofrece versatilidad y eficiencia en una variedad de materiales, desde madera hasta metal. Su dise駉 ergon髆ico y mango antideslizante aseguran un manejo c髆odo y preciso, mientras que su construcci髇 robusta garantiza durabilidad y resistencia. ', 'https://i.imghippo.com/files/gaOvw1722814514.jpg','2024-07-01');
+insert into producto(nombre, categoria, precio, descripcion, imagen, fecha_ingreso) values ('Termoducha', 'Ba帽o', 20000, 'Combina funcionalidad y dise帽o moderno para elevar tu experiencia en el ba帽o. Equipado con tecnolog铆a avanzada para un control preciso de la temperatura del agua, garantiza una ducha c贸moda y agradable cada vez. Su construcci贸n robusta y materiales de alta calidad aseguran durabilidad y resistencia al desgaste. F谩cil de instalar y compatible con la mayor铆a de los sistemas de agua.', 'https://i.imghippo.com/files/bh6Jk1722812930.jpg', '2024-07-01')
+insert into producto(nombre, categoria, precio, descripcion, imagen, fecha_ingreso) values ('Rodillo', 'Pintura y Accesorios', 7000, 'Una herramienta esencial para lograr acabados de pintura uniformes y profesionales en superficies amplias. Su dise帽o eficiente facilita la aplicaci贸n de pintura, ahorrando tiempo y esfuerzo en proyectos grandes. Fabricado con materiales duraderos, ofrece resistencia y una larga vida 煤til, mientras que su mango ergon贸mico asegura un agarre c贸modo, incluso durante sesiones prolongadas.', 'https://i.imghippo.com/files/u5rHn1722814543.jpg', '2024-07-01');
+insert into producto(nombre, categoria, precio, descripcion, imagen, fecha_ingreso) values ('Cinta M茅trica', 'Medici贸n', 2000, 'Una herramienta imprescindible para todo tipo de trabajos de medici贸n. Con una longitud adecuada para una variedad de proyectos, su dise帽o compacto y robusto permite un uso pr谩ctico y preciso. Fabricada con materiales resistentes, asegura durabilidad y una medici贸n exacta, siendo ideal tanto para tareas dom茅sticas como profesionales.', 'https://i.imghippo.com/files/IKkyg1722814341.jpg', '2024-07-01');
+insert into producto(nombre, categoria, precio, descripcion, imagen, fecha_ingreso) values ('Llave Inglesa', 'Herramientas', 20000, 'Una herramienta esencial en cualquier caja de herramientas. Su dise帽o ajustable permite adaptarse a diferentes tama帽os de tuercas y tornillos, ofreciendo versatilidad en una variedad de aplicaciones. Fabricada con acero de alta calidad, proporciona resistencia y durabilidad, soportando el uso intensivo sin deformarse. Su mango ergon贸mico asegura un agarre c贸modo y firme, facilitando el trabajo en espacios reducidos.', 'https://i.imghippo.com/files/NMhnP1722814401.jpg', '2024-07-01');
+insert into producto(nombre, categoria, precio, descripcion, imagen, fecha_ingreso) values ('Martillo', 'Herramientas', 15000, 'Una herramienta fundamental para cualquier proyecto de construcci贸n o reparaci贸n. Su dise帽o robusto y equilibrado permite una fuerza de impacto eficaz, ideal para clavar clavos y realizar tareas de demolici贸n. Fabricado con materiales de alta calidad, garantiza durabilidad y resistencia al desgaste. El mango ergon贸mico proporciona un agarre c贸modo, reduciendo la fatiga durante el uso prolongado', 'https://i.imghippo.com/files/V8nPX1722814450.jpg', '2024-07-01');
+insert into producto(nombre, categoria, precio, descripcion, imagen, fecha_ingreso) values ('Destornillador', 'Herramientas', 8000, 'Una herramienta vers谩til y esencial para cualquier caja de herramientas. Su dise帽o ergon贸mico y mango antideslizante garantizan un agarre c贸modo y firme, facilitando el manejo y reduciendo la fatiga. Fabricado con acero de alta calidad, ofrece durabilidad y precisi贸n en el ajuste de tornillos.', 'https://i.imghippo.com/files/5GwGS1722814483.jpg', '2024-07-01');
+insert into producto(nombre, categoria, precio, descripcion, imagen, fecha_ingreso) values ('Taladro', 'Herramientas El茅ctricas', 120000, 'Una herramienta el茅ctrica fundamental para perforar y realizar tareas de instalaci贸n. Con un potente motor y m煤ltiples velocidades, ofrece versatilidad y eficiencia en una variedad de materiales, desde madera hasta metal. Su dise帽o ergon贸mico y mango antideslizante aseguran un manejo c贸modo y preciso, mientras que su construcci贸n robusta garantiza durabilidad y resistencia. ', 'https://i.imghippo.com/files/gaOvw1722814514.jpg','2024-07-01');
  
  select * from usuario
