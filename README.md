@@ -57,7 +57,6 @@ El sistema de ferretería de TecnoFerre permite a los usuarios gestionar la comp
 
 
 ### Admin
-![image](https://github.com/user-attachments/assets/ca28d562-65f8-42e0-8eeb-d1cb35cc7ac4)
 ![image](https://github.com/user-attachments/assets/42cb64b8-1d3c-40ea-ac89-40f147301e6d)
 ![image](https://github.com/user-attachments/assets/53d961d9-9c9f-4433-88f7-27ea3db52580)
 ![image](https://github.com/user-attachments/assets/ec6b0d9b-1af1-4596-86b7-c26f5fbd1684)
