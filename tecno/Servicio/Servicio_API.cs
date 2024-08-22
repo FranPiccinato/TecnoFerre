@@ -44,7 +44,7 @@ namespace tecno.Servicio
         {
             List<Producto> lista = new List<Producto>();
 
-                await Autenticar();
+            await Autenticar();
 
             var cliente = new HttpClient();
             cliente.BaseAddress = new Uri(_baseUrl);

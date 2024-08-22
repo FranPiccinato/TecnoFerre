@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using ServicioApi.Models;
+using servicio.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,46 +14,47 @@ namespace ServicioApi.Controllers
     {
 
         private readonly string secretKey;
+        private readonly AppDbContext _context;
 
-        public AutenticacionController(IConfiguration config)
+        public AutenticacionController(IConfiguration config, AppDbContext context)
         {
-            secretKey = config.GetSection("settings").GetSection("secretKey").ToString();
+            secretKey = config.GetValue<string>("settings:secretkey");
+            _context = context;
         }
 
         [HttpPost]
         [Route("Validar")]
-        public IActionResult Validar([FromBody] Usuario request)
+        public async Task<IActionResult> Validar([FromBody] UsuarioRequest request)
         {
-
-            if (request.correo == "admin@gmail.com" && request.contrasena == "tecnoAdmin12")
+            if (_context == null)
             {
-
-                var keyBytes = Encoding.ASCII.GetBytes(secretKey);
-                var claims = new ClaimsIdentity();
-                claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, request.correo));
-
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = claims,
-                    Expires = DateTime.UtcNow.AddMinutes(5),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature)
-                };
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var tokenConfig = tokenHandler.CreateToken(tokenDescriptor);
-
-                string tokencreado = tokenHandler.WriteToken(tokenConfig);
-
-
-                return StatusCode(StatusCodes.Status200OK, new { token = tokencreado });
-
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error de configuración del servidor.");
             }
-            else
-            {
+            var usuario = await _context.Usuarios
+            .FirstOrDefaultAsync(u => u.correo == request.correo);
 
+            if (usuario == null || usuario.contrasena != request.contrasena)
+            {
                 return StatusCode(StatusCodes.Status401Unauthorized, new { token = "" });
             }
 
+            var keyBytes = Encoding.UTF8.GetBytes(secretKey);
+            var claims = new ClaimsIdentity();
+            claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, request.correo));
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = claims,
+                Expires = DateTime.UtcNow.AddMinutes(30),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenConfig = tokenHandler.CreateToken(tokenDescriptor);
+
+            string tokencreado = tokenHandler.WriteToken(tokenConfig);
+
+            return StatusCode(StatusCodes.Status200OK, new { token = tokencreado });
 
 
         }

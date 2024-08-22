@@ -3,23 +3,17 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using servicio.Models;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var misReglasCors = "ReglasCors";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: misReglasCors,
-                      builder =>
-                      {
-                          builder.AllowAnyOrigin()
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
-
-
-                      });
+    options.AddPolicy("ReglasCors", builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
 });
-
 
 // Configuración de controladores y Swagger
 builder.Services.AddControllers();
@@ -33,14 +27,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 // Configuración de autenticación JWT
-var secretKey = builder.Configuration.GetSection("settings")["secretkey"];
+var secretKey = builder.Configuration["settings:secretkey"];
 var keyBytes = Encoding.UTF8.GetBytes(secretKey);
 
-builder.Services.AddAuthentication(config => {
-
+builder.Services.AddAuthentication(config =>
+{
     config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(config => {
+}).AddJwtBearer(config =>
+{
     config.RequireHttpsMetadata = false;
     config.SaveToken = false;
     config.TokenValidationParameters = new TokenValidationParameters
@@ -52,6 +47,34 @@ builder.Services.AddAuthentication(config => {
     };
 });
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mi API", Version = "v1" });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Por favor ingrese el token JWT en el formato: Bearer {token}.",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -60,7 +83,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors(misReglasCors);
+app.UseCors("ReglasCors");
 
 app.UseHttpsRedirection();
 

@@ -9,7 +9,6 @@ namespace ServicioApi.Controllers
 {
     [EnableCors("ReglasCors")]
     [Route("api/[controller]")]
-    //[Authorize]
     [ApiController]
     public class ProductoController : ControllerBase
     {
@@ -21,6 +20,7 @@ namespace ServicioApi.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("Listar")]
         public async Task<IActionResult> ListarProductos()
@@ -36,6 +36,7 @@ namespace ServicioApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         [Route("Guardar")]
         public async Task<IActionResult> Guardar([FromBody] Producto producto)
@@ -52,6 +53,7 @@ namespace ServicioApi.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("Obtener/{id:int}")]
         public async Task<IActionResult> ObtenerProducto(int id)
@@ -71,6 +73,7 @@ namespace ServicioApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut]
         [Route("Editar")]
         public async Task<IActionResult> Editar([FromBody] Producto producto)
@@ -101,6 +104,7 @@ namespace ServicioApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete]
         [Route("Eliminar/{id:int}")]
         public async Task<IActionResult> Eliminar(int id)
